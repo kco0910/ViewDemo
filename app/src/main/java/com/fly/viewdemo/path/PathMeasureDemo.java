@@ -1,5 +1,6 @@
 package com.fly.viewdemo.path;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -18,7 +19,6 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.fly.viewdemo.R;
-import com.orhanobut.logger.Logger;
 
 /**
  * 1、参考文章http://blog.csdn.net/u013831257/article/details/51565591
@@ -66,6 +66,8 @@ public class PathMeasureDemo extends View {
         mBitmap2 = BitmapFactory.decodeResource(getResources(), R.drawable.fly, options);
         mMatrix = new Matrix();
 
+        initSearch();
+
         postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -90,8 +92,8 @@ public class PathMeasureDemo extends View {
         //验证pathmeasure 对path不产生影响，
         PathMeasure pathMeasure = new PathMeasure(path,false);
         PathMeasure pathMeasure1 = new PathMeasure(path,true);
-        Logger.i("pathMeasure :"+pathMeasure.getLength());
-        Logger.i("pathMeasure1 :"+pathMeasure1.getLength());
+       // Logger.i("pathMeasure :"+pathMeasure.getLength());
+       // Logger.i("pathMeasure1 :"+pathMeasure1.getLength());
 
         //canvas.drawPath(path,mPaint);
 
@@ -102,9 +104,9 @@ public class PathMeasureDemo extends View {
         path1.addRect(-200,-200,200,200, Path.Direction.CW);
 
         PathMeasure pathMeasure2 = new PathMeasure(path1,false);
-        Logger.i("path1中的长度:"+pathMeasure2.getLength());
+       // Logger.i("path1中的长度:"+pathMeasure2.getLength());
         pathMeasure2.nextContour();//计算下一条线
-        Logger.i("nextContour 后的pah1长度"+pathMeasure2.getLength());
+       // Logger.i("nextContour 后的pah1长度"+pathMeasure2.getLength());
 
 
         aroundFly1(canvas);
@@ -135,10 +137,26 @@ public class PathMeasureDemo extends View {
         canvas.drawPath(dst,mPaint);
     }
 
-    PathMeasure circleMeasure = new PathMeasure();
-    Path searchPath = new Path();
-    Path circlePath = new Path();
+    private static final int SEARCHING = 605;
+    private static final int SEARCH_START = 806;
+    private PathMeasure circleMeasure = new PathMeasure();
+    private Path searchPath = new Path();
+    private Path circlePath = new Path();
+    private int searchState = SEARCH_START;
+    private float searchAnimValue;
+    private void initSearch(){
+        //不要使用addCircle方法，这样不能设置开始角度,不方便得到搜索的把手
+        RectF smallRect = new RectF(-50, -50, 50, 50);
+        searchPath.addArc(smallRect,45,359.0f);//不要到360度,否则内部会自动优化,测量不能取到需要的数值
 
+        float[] pos = new float[2];
+        RectF bigRect = new RectF(-100, -100, 100, 100);
+        circlePath.addArc(bigRect,45,359.0f);
+        circleMeasure.setPath(circlePath, false);
+        circleMeasure.getPosTan(0, pos, null);
+
+        searchPath.lineTo(pos[0], pos[1]);
+    }
 
     /**
      * 搜索框动画
@@ -149,32 +167,19 @@ public class PathMeasureDemo extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
 
         canvas.translate(-200,-200);
-        //不要使用addCircle方法，这样不能设置开始角度,不方便得到搜索的把手
-        RectF smallRect = new RectF(-50, -50, 50, 50);
-        searchPath.addArc(smallRect,45,359.0f);//不要到360度,否则内部会自动优化,测量不能取到需要的数值
-
-
-        float[] pos = new float[2];
-        RectF bigRect = new RectF(-100, -100, 100, 100);
-        circlePath.addArc(bigRect,45,359.0f);
-        circleMeasure.setPath(circlePath, false);
-        circleMeasure.getPosTan(0, pos, null);
-
-        searchPath.lineTo(pos[0], pos[1]);
-
-
-        circleMeasure.setPath(searchPath,false);
-        float length = circleMeasure.getLength();
         Path dst = new Path();
         dst.rLineTo(0,0);
-        boolean segment = circleMeasure.getSegment(length * animValue, length, dst, true);
-        if (segment){
+        float length;
+        if (searchState == SEARCH_START){
+            circleMeasure.setPath(searchPath,false);
+            length = circleMeasure.getLength();
+            circleMeasure.getSegment(length * animValue, length, dst, true);
             canvas.drawPath(dst,mPaint);
         }else{
             //开始画转圈
             circleMeasure.setPath(circlePath,false);
             length = circleMeasure.getLength();
-            float stopD = length*animValue + 5 > length ? length : length*animValue + 5;
+            float stopD = length*animValue + 10 > length ? length : length*animValue + 10;
             circleMeasure.getSegment(length*animValue,stopD,dst,true);
             canvas.drawPath(dst,mPaint);
         }
@@ -222,22 +227,41 @@ public class PathMeasureDemo extends View {
         canvas.drawBitmap(mBitmap,mMatrix,mPaint);
     }
 
-
-
-
+    private ObjectAnimator mObjectAnimator =null;
     private void aroundFlyAnim(){
-        ObjectAnimator animValue = ObjectAnimator.ofFloat(this, "animValue", 0f, 1f);
-        animValue.setDuration(10*1000);
-        animValue.setInterpolator(new AccelerateDecelerateInterpolator());
-        animValue.setRepeatMode(ValueAnimator.RESTART);
-        animValue.setRepeatCount(ValueAnimator.INFINITE);
-        animValue.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        mObjectAnimator = ObjectAnimator.ofFloat(this, "animValue", 0f, 1f);
+        mObjectAnimator.setDuration(10*1000);
+        mObjectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        mObjectAnimator.setRepeatMode(ValueAnimator.RESTART);
+        mObjectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mObjectAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 postInvalidate();
             }
         });
-        animValue.start();
+        mObjectAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                searchState = SEARCHING;
+            }
+        });
+        mObjectAnimator.start();
     }
 
     public float getAnimValue() {

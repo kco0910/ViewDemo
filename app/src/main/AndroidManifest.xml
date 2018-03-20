@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".path.PathActivity"/>
+        <activity android:name=".taiji.TaiJiActivity"/>
     </application>
 
 </manifest>
