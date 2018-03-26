@@ -8,8 +8,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.fly.viewdemo.model.IntentData;
 import com.fly.viewdemo.path.PathActivity;
+import com.fly.viewdemo.picture.PictureActivity;
 import com.fly.viewdemo.taiji.TaiJiActivity;
+import com.fly.viewdemo.test.TestActivity;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ListView mListView;
@@ -18,23 +23,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mListView = findViewById(R.id.lv);
-        String[] datas = new String[]{"Path","太极"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,datas);
+        ArrayList<IntentData> datas = new ArrayList<>();
+        datas.add(new IntentData("测试",TestActivity.class));
+        datas.add(new IntentData("Path",PathActivity.class));
+        datas.add(new IntentData("太极",TaiJiActivity.class));
+        datas.add(new IntentData("Picture",PictureActivity.class));
+        ArrayAdapter<IntentData> adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,datas);
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = null;
-                switch (position){
-                    case 0:
-                        intent = new Intent(MainActivity.this, PathActivity.class);
-                        break;
-                    case 1:
-                        intent = new Intent(MainActivity.this, TaiJiActivity.class);
-                        break;
-                }
-                if (intent != null){
-                    startActivity(intent);
+                IntentData intentData = (IntentData) parent.getItemAtPosition(position);
+                if (intentData != null && intentData.cls!= null){
+                    startActivity(new Intent(MainActivity.this,intentData.cls));
                 }
             }
         });

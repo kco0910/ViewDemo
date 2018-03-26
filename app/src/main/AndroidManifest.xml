@@ -19,6 +19,8 @@
         </activity>
         <activity android:name=".path.PathActivity"/>
         <activity android:name=".taiji.TaiJiActivity"/>
+        <activity android:name=".test.TestActivity"/>
+        <activity android:name=".picture.PictureActivity" android:hardwareAccelerated="false"/>
     </application>
 
 </manifest>
