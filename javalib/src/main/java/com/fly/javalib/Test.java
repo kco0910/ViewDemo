@@ -11,6 +11,8 @@ public class Test {
     public static void operate(StringBuffer a,StringBuffer b){
         a.append(b);
         b = a;
+
+        Test2.INSTANCE.ss();
     }
 
 }

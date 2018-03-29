@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
         android:name=".MyApplication"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -20,7 +21,9 @@
         <activity android:name=".path.PathActivity"/>
         <activity android:name=".taiji.TaiJiActivity"/>
         <activity android:name=".test.TestActivity"/>
-        <activity android:name=".picture.PictureActivity" android:hardwareAccelerated="false"/>
+        <activity android:name=".picture.PictureActivity"/>
+        <activity android:name=".arc.ArcActivity"/>
+        <activity android:name=".practice1.Practice1Activity"/>
     </application>
 
 </manifest>
