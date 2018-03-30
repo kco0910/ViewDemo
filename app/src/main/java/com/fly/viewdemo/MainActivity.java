@@ -13,6 +13,7 @@ import com.fly.viewdemo.model.IntentData;
 import com.fly.viewdemo.path.PathActivity;
 import com.fly.viewdemo.picture.PictureActivity;
 import com.fly.viewdemo.practice1.Practice1Activity;
+import com.fly.viewdemo.practice2.PracticeActivity2;
 import com.fly.viewdemo.taiji.TaiJiActivity;
 import com.fly.viewdemo.test.TestActivity;
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         mListView = findViewById(R.id.lv);
         ArrayList<IntentData> datas = new ArrayList<>();
         datas.add(new IntentData("练习1",Practice1Activity.class));
+        datas.add(new IntentData("练习2",PracticeActivity2.class));
         datas.add(new IntentData("测试",TestActivity.class));
         datas.add(new IntentData("Path",PathActivity.class));
         datas.add(new IntentData("太极",TaiJiActivity.class));

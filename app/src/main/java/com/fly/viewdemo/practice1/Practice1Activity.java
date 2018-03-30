@@ -19,16 +19,19 @@ public class Practice1Activity extends BaseTabActivity {
         LineFragment lineFragment = new LineFragment();
         ColourOptimize colourOptimize = new ColourOptimize();
         PathEffectFragment pathEffectFragment  = new PathEffectFragment();
-
+        ShadowFragment shadowMaskFragment = new ShadowFragment();
+        MaskFragment maskFragment  = new MaskFragment();
+        GetPathFragment getPathFragment  = new GetPathFragment();
         return new Fragment[]{shapeFragment,colorFilterFragment,
-                xfermodeFragment,lineFragment,colourOptimize,pathEffectFragment};
+                xfermodeFragment,lineFragment,colourOptimize,
+                pathEffectFragment,shadowMaskFragment,maskFragment,getPathFragment};
     }
 
     @Override
     protected String[] getTitles() {
         return new String[]{"Shape","ColorFilter",
                 "Xfermode","Line","色彩优化","PathEffect",
-                "ShadowMask"};
+                "Shadow","Mask","GetPath"};
     }
 
 
