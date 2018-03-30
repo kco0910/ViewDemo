@@ -43,20 +43,30 @@ public class BaseView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //坐标点移动屏幕中心
-        float dx = getWidth()/2;
-        float dy = getHeight()/2;
-        canvas.translate(dx,dy);
-        //画坐标轴
-        mPaint.setColor(Color.GRAY);
-        canvas.drawLine(-dx,0,dx,0,mPaint);
-        canvas.drawLine(0,-dx,0,dx,mPaint);
+        if (toCenter()){
+            //坐标点移动屏幕中心
+            float dx = getWidth()/2;
+            float dy = getHeight()/2;
+            canvas.translate(dx,dy);
 
+            //画坐标轴
+            mPaint.setColor(Color.GRAY);
+            canvas.drawLine(-dx,0,dx,0,mPaint);
+            canvas.drawLine(0,-dx,0,dx,mPaint);
+        }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),MeasureSpec.getSize(heightMeasureSpec));
+    }
+
+    /**
+     * 将坐标点移到中心点
+     * @return
+     */
+    protected boolean toCenter(){
+        return  true;
     }
 }
