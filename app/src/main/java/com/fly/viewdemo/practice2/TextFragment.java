@@ -66,16 +66,33 @@ public class TextFragment extends Fragment {
             canvas.drawTextOnPath(text,path,0,0,mPaint);
 
             //drawText只能绘制单行的文字，如果需要换行需要使用StaticLayout
+//            width 是文字区域的宽度，文字到达这个宽度后就会自动换行；
+//            align 是文字的对齐方向；
+//            spacingmult 是行间距的倍数，通常情况下填 1 就好；
+//            spacingadd 是行间距的额外增加值，通常情况下填 0 就好；
+//            includeadd 是指是否在文字上下添加额外的空间，来避免某些过高的字符的绘制出现越界
+
 
             text = "我就想看看你能不能换行，如果不能，我再看看。看你真的换行了呀!";
             TextPaint textPaint = new TextPaint();
             textPaint.setTextSize(50.0f);
             textPaint.setColor(Color.GREEN);
+
             StaticLayout staticLayout = new StaticLayout(text,textPaint,600, Layout.Alignment.ALIGN_NORMAL,
-                    0,1,true);
+                    1,0,true);
+
+            String text2 = "a\nbc\ndefghi\njklm\nnopqrst\nuvwx\nyz";
+            StaticLayout staticLayout2 = new StaticLayout(text2, textPaint, 600,
+                    Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+
             canvas.save();
             canvas.translate(0,120);
             staticLayout.draw(canvas);
+
+            canvas.translate(0,200);
+            staticLayout2.draw(canvas);
+            canvas.restore();
+
 
         }
 

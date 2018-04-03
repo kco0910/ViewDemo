@@ -47,6 +47,7 @@ public class BaseTabActivity extends AppCompatActivity {
             }
         });
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(10);
     }
 
     protected Fragment[] getFragments(){

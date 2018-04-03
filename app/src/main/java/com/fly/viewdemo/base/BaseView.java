@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
+
 /**
  * 1、Paint 的 style 默认是 FILL
  * 2、坐标点移到中间
@@ -43,6 +45,7 @@ public class BaseView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Logger.i("onDraw");
         if (toCenter()){
             //坐标点移动屏幕中心
             float dx = getWidth()/2;
@@ -61,6 +64,7 @@ public class BaseView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec),MeasureSpec.getSize(heightMeasureSpec));
     }
+
 
     /**
      * 将坐标点移到中心点

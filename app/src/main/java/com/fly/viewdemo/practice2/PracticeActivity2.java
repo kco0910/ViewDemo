@@ -23,12 +23,13 @@ public class PracticeActivity2 extends BaseTabActivity {
     @Override
     protected Fragment[] getFragments() {
         TextFragment textFragment = new TextFragment();
-        return new Fragment[]{textFragment};
+        Text2Fragment text2Fragment = new Text2Fragment();
+        return new Fragment[]{textFragment,text2Fragment};
     }
 
     @Override
     protected String[] getTitles() {
-        return new String[]{"Text"};
+        return new String[]{"Text","Text2"};
     }
 
 
