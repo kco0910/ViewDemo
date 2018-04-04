@@ -12,6 +12,8 @@ import android.view.View;
 import com.fly.viewdemo.base.BaseFragment;
 import com.fly.viewdemo.base.BaseView;
 
+import java.util.Locale;
+
 /**
  * Created by Fj on 2018/4/3.
  */
@@ -127,9 +129,52 @@ public class Text2Fragment extends BaseFragment {
                 mPaint.setFontFeatureSettings("");
             }
             //文本绘制方式
+            canvas.translate(0,30.0f);
+            canvas.drawLine(200,0,200,30,mPaint);
+            str = "Align:LEFT";
+            mPaint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText(str,200.0f,30.0f,mPaint);
+
+            canvas.translate(0,30.0f);
+            str = "Align:RIGHT";
+            mPaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText(str,200.0f,30.0f,mPaint);
 
 
+            canvas.translate(0,30.0f);
+            str = "Align:CENTER";
+            mPaint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(str,200.0f,30.0f,mPaint);
+            mPaint.setTextAlign(Paint.Align.LEFT);
+            //Local
+            if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.JELLY_BEAN_MR1){
+                canvas.translate(0,30.0f);
+                str = "Local : 简体中文 :骨";
+                mPaint.setTextLocale(Locale.CANADA);
+                canvas.drawText(str,0,30.0f,mPaint);
 
+                canvas.translate(0,30.0f);
+                str = "Local : 繁体中文 : 骨";
+                mPaint.setTextLocale(Locale.TAIWAN);
+                canvas.drawText(str,0,30.0f,mPaint);
+
+
+                canvas.translate(0,30.0f);
+                str = "Local :  日语 : 写";
+                mPaint.setTextLocale(Locale.JAPAN);
+                canvas.drawText(str,0,30.0f,mPaint);
+
+                mPaint.setTextLocale(Locale.CANADA);
+            }
+            //getFontSpacing()
+            //两行文字的 baseline 的距离。这个值是系统根据文字的字体和字号自动计算的。
+            // 它的作用是当你要手动绘制多行文字（而不是使用 StaticLayout）的时候，
+            // 可以在换行的时候给 y 坐标加上这个值来下移文字
+            canvas.translate(0,30.0f);
+            str = "下一行通过getFontSpacing来绘制";
+            canvas.drawText(str,0,30.0f,mPaint);
+            str = "这行文字是通过getFontSpacing来绘制的";
+            canvas.drawText(str,0,mPaint.getFontSpacing()+30,mPaint);
         }
 
         @Override
