@@ -16,6 +16,7 @@ import com.fly.viewdemo.practice1.Practice1Activity;
 import com.fly.viewdemo.practice2.PracticeActivity2;
 import com.fly.viewdemo.practice3.PracticeActivity3;
 import com.fly.viewdemo.practice4.PracticeActivity4;
+import com.fly.viewdemo.practice5.PracticeActivity5;
 import com.fly.viewdemo.taiji.TaiJiActivity;
 import com.fly.viewdemo.test.TestActivity;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         datas.add(new IntentData("文本相关练习",PracticeActivity2.class));
         datas.add(new IntentData("练习3",PracticeActivity3.class));
         datas.add(new IntentData("onDraw相关练习",PracticeActivity4.class));
+        datas.add(new IntentData("动画", PracticeActivity5.class));
         datas.add(new IntentData("测试",TestActivity.class));
         datas.add(new IntentData("Path",PathActivity.class));
         datas.add(new IntentData("太极",TaiJiActivity.class));

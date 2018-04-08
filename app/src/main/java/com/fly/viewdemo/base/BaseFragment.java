@@ -28,7 +28,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Logger.i("onViewCreated");
         FrameLayout frameLayout = view.findViewById(R.id.fragment_contain);
         View childView = createChildView();
         if (childView != null){
