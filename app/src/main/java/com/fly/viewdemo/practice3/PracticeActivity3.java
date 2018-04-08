@@ -19,12 +19,15 @@ public class PracticeActivity3 extends BaseTabActivity {
 
     @Override
     protected Fragment[] getFragments() {
-        return null;
+        ClipFragment clipFragment  = new ClipFragment();
+        MatrixFragment matrixFragment = new MatrixFragment();
+        return new Fragment[]{clipFragment,matrixFragment};
     }
 
     @Override
+
     protected String[] getTitles() {
-        return null;
+        return new String[]{"clipRect","matrix"};
     }
 
 
