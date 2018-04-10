@@ -21,12 +21,14 @@ public class PracticeActivity5 extends BaseTabActivity {
         EvaluatorFragment evaluatorFragment  = new EvaluatorFragment();
         HolderAndSetFragment holderAndSetFragment = new HolderAndSetFragment();
         SkewFragment skewFragment = new SkewFragment();
+        CameraFragment cameraFragment = new CameraFragment();
         return new Fragment[]{propertyAnimationFragment,evaluatorFragment,
-                holderAndSetFragment,skewFragment};
+                holderAndSetFragment,skewFragment,cameraFragment};
     }
 
     @Override
     protected String[] getTitles() {
-        return new String[]{"propertyAnimation","evaluator","单View多动画","斜交动画"};
+        return new String[]{"propertyAnimation","evaluator",
+                "单View多动画","斜交动画","camera"};
     }
 }
