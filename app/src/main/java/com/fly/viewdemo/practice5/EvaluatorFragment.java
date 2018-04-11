@@ -1,15 +1,10 @@
 package com.fly.viewdemo.practice5;
 
-import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.fly.viewdemo.R;
 import com.fly.viewdemo.View.CircleView;

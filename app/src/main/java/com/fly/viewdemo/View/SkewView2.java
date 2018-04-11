@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.fly.viewdemo.R;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by Fj on 2018/4/10.
@@ -60,19 +62,37 @@ public class SkewView2 extends View {
         mDegreeZAnimator.setDuration(1000);
         mDegreeZAnimator.setStartDelay(500);
         mDegreeZAnimator.setInterpolator(new LinearOutSlowInInterpolator());
-        mDegreeYAnimator.setDuration(800);
+        mDegreeZAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Logger.i("mDegreeZAnimator :"+animation.getAnimatedValue());
+            }
+        });
+        mDegreeYAnimator.setDuration(1000);
         mDegreeYAnimator.setStartDelay(500);
         mDegreeYAnimator.setInterpolator(new LinearInterpolator());
+        mDegreeYAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Logger.i("mDegreeYAnimator :"+animation.getAnimatedValue());
+            }
+        });
         mDegreeY2Animator.setDuration(500);
         mDegreeY2Animator.setStartDelay(500);
         mDegreeY2Animator.setInterpolator(new LinearInterpolator());
+        mDegreeY2Animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Logger.i("mDegreeY2Animator :"+animation.getAnimatedValue());
+            }
+        });
         animatorSet = new AnimatorSet();
         animatorSet.playSequentially(mDegreeYAnimator, mDegreeZAnimator, mDegreeY2Animator);
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                try {
+                /*try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -80,7 +100,7 @@ public class SkewView2 extends View {
                 degreeZ = 0;
                 degreeY = 0;
                 degreeY2 = 0;
-                animatorSet.start();
+                animatorSet.start();*/
             }
         });
     }
@@ -157,7 +177,6 @@ public class SkewView2 extends View {
         canvas.drawBitmap(bitmap, x, y, paint);
         camera.restore();
         canvas.restore();
-
     }
 
     /**

@@ -20,7 +20,6 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Logger.i("onCreateView");
         View containView = inflater.inflate(R.layout.fragment_base_layout,null);
         return containView;
     }

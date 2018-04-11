@@ -22,13 +22,14 @@ public class PracticeActivity5 extends BaseTabActivity {
         HolderAndSetFragment holderAndSetFragment = new HolderAndSetFragment();
         SkewFragment skewFragment = new SkewFragment();
         CameraFragment cameraFragment = new CameraFragment();
+        CoordinateConvertFragment coordinateConvertFragment = new CoordinateConvertFragment();
         return new Fragment[]{propertyAnimationFragment,evaluatorFragment,
-                holderAndSetFragment,skewFragment,cameraFragment};
+                holderAndSetFragment,skewFragment,cameraFragment,coordinateConvertFragment};
     }
 
     @Override
     protected String[] getTitles() {
         return new String[]{"propertyAnimation","evaluator",
-                "单View多动画","斜交动画","camera"};
+                "单View多动画","斜交动画","camera","几何转换_坐标系"};
     }
 }
