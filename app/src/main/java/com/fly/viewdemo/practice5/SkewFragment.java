@@ -3,7 +3,6 @@ package com.fly.viewdemo.practice5;
 import android.view.View;
 
 import com.fly.viewdemo.View.SkewView;
-import com.fly.viewdemo.View.SkewView2;
 import com.fly.viewdemo.base.BaseFragment;
 
 /**

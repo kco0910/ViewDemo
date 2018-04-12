@@ -14,7 +14,7 @@ import com.fly.viewdemo.R;
  * Created by Fj on 2018/3/29.
  */
 
-public class BaseTabActivity extends AppCompatActivity {
+public abstract class BaseTabActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
@@ -48,15 +48,12 @@ public class BaseTabActivity extends AppCompatActivity {
         });
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOffscreenPageLimit(10);
+
     }
 
-    protected Fragment[] getFragments(){
-        return null;
-    }
+    protected abstract Fragment[] getFragments();
 
-    protected String[] getTitles(){
-        return null;
-    }
+    protected abstract String[] getTitles();
 
 
 }

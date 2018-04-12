@@ -5,8 +5,8 @@ package com.fly.javalib;
  */
 
 public class B {
-    public static C t1 = new C();
-    public static C t2 = new C();
+    public static B t1 = new B();
+    public static B t2 = new B();
     public B(){//构造函数
         System.out.println("construct real");
     }

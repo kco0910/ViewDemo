@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class Test {
+public class NumberFormatTest {
     public static void main(String args[]){
         float value = 123456789128f;
 //        System.out.println("method --- 1:"+big(value));
@@ -13,7 +13,7 @@ public class Test {
     }
 
     private static String big(double d) {
-        NumberFormat nf = NumberFormat.getInstance();
+        java.text.NumberFormat nf = java.text.NumberFormat.getInstance();
         // 是否以逗号隔开, 默认true以逗号隔开,如[123,456,789.128]
         nf.setGroupingUsed(false);
         // 结果未做任何处理

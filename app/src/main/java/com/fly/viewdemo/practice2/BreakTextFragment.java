@@ -62,6 +62,7 @@ public class BreakTextFragment extends BaseFragment {
 
             len = paint.breakText(str, 0, str.length(), true, 500, measuredWidth);
             canvas.drawText(str,0,len,100,300,paint);
+
         }
 
         @Override

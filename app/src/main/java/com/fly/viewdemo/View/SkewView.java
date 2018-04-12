@@ -77,7 +77,7 @@ public class SkewView extends BaseView {
         canvas.rotate(-degrees);
         mCamera.rotateY(degreesY);
         mCamera.applyToCanvas(canvas);
-        canvas.clipRect(0, -centerY, centerX, centerY);
+        canvas.clipRect(0, -centerY, centerX, centerY);//如果只截图的一半，会导致在转角的时候不能完全显示
         canvas.rotate(degrees);
         mCamera.restore();
         canvas.translate(-centerX, -centerY);

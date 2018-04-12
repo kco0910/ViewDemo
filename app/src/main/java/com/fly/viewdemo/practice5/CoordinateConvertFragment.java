@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.fly.viewdemo.animator.FloatAnimatorFactor;
+import com.fly.viewdemo.animator.AnimatorFactor;
 import com.fly.viewdemo.base.BaseFragment;
 import com.fly.viewdemo.base.BaseView;
 import com.fly.viewdemo.model.C;
@@ -44,7 +44,7 @@ public class CoordinateConvertFragment extends BaseFragment {
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    FloatAnimatorFactor.floatAnimator(new ValueAnimator.AnimatorUpdateListener() {
+                    AnimatorFactor.floatAnimator(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator animation) {
                             degrees = (float)animation.getAnimatedValue();

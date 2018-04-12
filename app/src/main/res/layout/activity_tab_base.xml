@@ -14,7 +14,7 @@
         app:tabIndicatorColor="#3082B4"
         app:tabMode="fixed">
     </android.support.design.widget.TabLayout>
-    <android.support.v4.view.ViewPager
+    <com.fly.viewdemo.View.NoScrollViewPager
         android:background="@android:color/white"
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

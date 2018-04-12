@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.fly.viewdemo.View.ViewActivity;
 import com.fly.viewdemo.arc.ArcActivity;
 import com.fly.viewdemo.model.IntentData;
 import com.fly.viewdemo.path.PathActivity;
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         datas.add(new IntentData("文本相关练习",PracticeActivity2.class));
         datas.add(new IntentData("练习3",PracticeActivity3.class));
         datas.add(new IntentData("onDraw相关练习",PracticeActivity4.class));
-        datas.add(new IntentData("动画", PracticeActivity5.class));
+        datas.add(new IntentData("动画练习", PracticeActivity5.class));
+        datas.add(new IntentData("各种自定义View", ViewActivity.class));
         datas.add(new IntentData("测试",TestActivity.class));
         datas.add(new IntentData("Path",PathActivity.class));
         datas.add(new IntentData("太极",TaiJiActivity.class));
