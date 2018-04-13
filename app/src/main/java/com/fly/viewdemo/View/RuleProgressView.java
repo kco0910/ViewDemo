@@ -9,7 +9,11 @@ import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.fly.viewdemo.animator.AnimatorFactor;
 import com.orhanobut.logger.Logger;
@@ -27,6 +31,10 @@ public class RuleProgressView extends View {
     private int lineColor = Color.WHITE;
     private Paint mPaint;
     private Path mPath;
+    private VelocityTracker mVelocityTracker;
+    private int mScaledTouchSlop;
+    public static final float MAX_SPEED = 20.f;
+    private ValueAnimator mValueAnimator;
 
     public RuleProgressView(Context context) {
         this(context,null);
@@ -44,12 +52,8 @@ public class RuleProgressView extends View {
     private void init(){
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPath = new Path();
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //animator();
-            }
-        },2*1000);
+        ViewConfiguration viewConfiguration = ViewConfiguration.get(getContext());
+        mScaledTouchSlop = viewConfiguration.getScaledTouchSlop();
     }
 
     @Override
@@ -74,12 +78,13 @@ public class RuleProgressView extends View {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.WHITE);
         canvas.drawPath(mPath,mPaint);
-        Logger.i("dx值:"+dx);
         canvas.save();
         canvas.clipRect(-halfW,0,halfW,height);
         mPaint.setColor(lineColor);
         int count = max -min;
         float x;
+        dx = dx>0?0:dx;
+        dx = Math.abs(dx)>count*gap?-count*gap:dx;
         for (int i = 0; i <=count ; i++) {
             x = dx+i*gap;
             if (i%10 == 0){
@@ -97,20 +102,6 @@ public class RuleProgressView extends View {
     }
 
 
-
-
-
-    private void animator(){
-        AnimatorFactor.floatAnimator(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                dx = (float)animation.getAnimatedValue();
-                postInvalidate();
-            }
-        },10*1000,0,130).start();
-    }
-
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -122,22 +113,62 @@ public class RuleProgressView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
-//        Logger.i("x:"+x+",preX:"+preX);
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 preX = x;
+                if (mVelocityTracker == null){
+                    mVelocityTracker = VelocityTracker.obtain();
+                }else{
+                    mVelocityTracker.clear();
+                }
+                mVelocityTracker.addMovement(event);
                 return true;
             case MotionEvent.ACTION_MOVE:
-                if (x >= preX){ //向右
-                    dx -= (preX -x);
-                }else if (x < preX ){ //向左
-                    dx += (x-preX);
+                mVelocityTracker.addMovement(event);
+                mVelocityTracker.computeCurrentVelocity(10, MAX_SPEED);
+                if (Math.abs(x-preX) >=mScaledTouchSlop){
+                    if (x >= preX){ //向右
+                        dx -= (preX -x);
+                    }else if (x < preX ){ //向左
+                        dx += (x-preX);
+                    }
+                    preX = x;
+                    postInvalidate();
                 }
-                preX = x;
-                postInvalidate();
                 return  true;
+            case MotionEvent.ACTION_UP:
+                sliding();
+                break;
         }
         return super.onTouchEvent(event);
     }
 
+
+    private void sliding(){
+        if (mValueAnimator == null){
+            mValueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f);
+            mValueAnimator.setInterpolator(new DecelerateInterpolator());
+            mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float speed = mVelocityTracker.getXVelocity();
+                    float value = (float)animation.getAnimatedValue()*speed;
+                    dx += value;
+                    postInvalidate();
+                }
+            });
+        }
+        mValueAnimator.setDuration(2*1000);
+        mValueAnimator.start();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mVelocityTracker != null){
+            mVelocityTracker.clear();
+            mVelocityTracker.recycle();
+            mVelocityTracker = null;
+        }
+    }
 }
