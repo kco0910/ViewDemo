@@ -1,6 +1,5 @@
 package com.fly.viewdemo.practice5;
 
-import android.animation.ObjectAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
@@ -8,7 +7,6 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.fly.viewdemo.R;
@@ -20,16 +18,16 @@ import com.fly.viewdemo.base.BaseFragment;
  * 3、属性动画后带有by方法的，表示在原来动画的数值上再增加一次数值再执行.
  * 4.View.animate,ObjectAnimation
  * 5、Interpolator
- *    AccelerateDecelerateInterpolator :  加速再减速  FastOutSlowInInterpolator
- *    LinearInterpolator : 匀速
- *    AccelerateInterpolator : 加速      FastOutLinearInInterpolator :5.0和v4包中加入  相比 一个是指数曲线，一个是贝塞尔曲线，视觉效果是初始速度快一点
- *    DecelerateInterpolator : 减速     LinearOutSlowInInterpolator
- *    AnticipateInterpolator :
- *    OvershootInterpolator :
- *    AnticipateOvershootInterpolator :
- *    BounceInterpolator :
- *    CycleInterpolator :
- *    PathInterpolator : 自定义速度模型
+ * AccelerateDecelerateInterpolator :  加速再减速  FastOutSlowInInterpolator
+ * LinearInterpolator : 匀速
+ * AccelerateInterpolator : 加速      FastOutLinearInInterpolator :5.0和v4包中加入  相比 一个是指数曲线，一个是贝塞尔曲线，视觉效果是初始速度快一点
+ * DecelerateInterpolator : 减速     LinearOutSlowInInterpolator
+ * AnticipateInterpolator :
+ * OvershootInterpolator :
+ * AnticipateOvershootInterpolator :
+ * BounceInterpolator :
+ * CycleInterpolator :
+ * PathInterpolator : 自定义速度模型
  * Created by Fj on 2018/4/8.
  */
 public class PropertyAnimationFragment extends BaseFragment {
@@ -49,7 +47,7 @@ public class PropertyAnimationFragment extends BaseFragment {
         return view;
     }
 
-    private void initView(View view){
+    private void initView(View view) {
         img = view.findViewById(R.id.img_view);
         img_view_2 = view.findViewById(R.id.img_view_2);
         mImg_view_3 = view.findViewById(R.id.img_view_3);
@@ -105,47 +103,47 @@ public class PropertyAnimationFragment extends BaseFragment {
     }
 
 
-    private void translation(){
+    private void translation() {
         img.animate().translationX(100);
         //ObjectAnimator.ofFloat(img,"translationX",100);
     }
 
-    private void translationBy(){
+    private void translationBy() {
         img_view_2.animate().translationXBy(100);
     }
 
-    private void anticipateInterpolator(){
+    private void anticipateInterpolator() {
         mImg_view_3.animate()
                 .setInterpolator(new AnticipateInterpolator())
-                .setDuration(5*1000)
+                .setDuration(5 * 1000)
                 .translationX(400);
     }
 
-    private void overshootInterpolator(){
+    private void overshootInterpolator() {
         mImg_view_4.animate()
                 .setInterpolator(new OvershootInterpolator())
-                .setDuration(5*1000)
+                .setDuration(5 * 1000)
                 .translationX(400);
     }
 
-    private void anticipateOvershootInterpolator(){
+    private void anticipateOvershootInterpolator() {
         mImg_view_5.animate()
                 .setInterpolator(new AnticipateOvershootInterpolator())
-                .setDuration(5*1000)
+                .setDuration(5 * 1000)
                 .translationX(400);
     }
 
-    private void bounceInterpolator(){
+    private void bounceInterpolator() {
         mImg_view_6.animate()
                 .setInterpolator(new BounceInterpolator())
-                .setDuration(5*1000)
+                .setDuration(5 * 1000)
                 .translationX(400);
     }
 
-    private void cycleInterpolator(){
+    private void cycleInterpolator() {
         mImg_view_7.animate()
                 .setInterpolator(new CycleInterpolator(2.0f))
-                .setDuration(5*1000)
+                .setDuration(5 * 1000)
                 .translationX(400);
     }
 

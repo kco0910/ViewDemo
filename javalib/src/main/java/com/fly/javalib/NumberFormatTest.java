@@ -6,10 +6,10 @@ import java.text.NumberFormat;
 
 public class NumberFormatTest {
     public static void main(String args[]){
-        float value = 123456789128f;
-//        System.out.println("method --- 1:"+big(value));
+        float value = 999999999f;
+        System.out.println("method --- 1:"+big(value));
 //        System.out.println("method  --- 2:"+big2(value));
-        System.out.println("method  --- 3:"+big3(String.valueOf(value)));
+//        System.out.println("method  --- 3:"+big3(String.valueOf(value)));
     }
 
     private static String big(double d) {

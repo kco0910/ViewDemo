@@ -1,6 +1,5 @@
 package com.fly.viewdemo.View;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,10 +11,9 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 
-import com.fly.viewdemo.animator.AnimatorFactor;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -33,8 +31,8 @@ public class RuleProgressView extends View {
     private Path mPath;
     private VelocityTracker mVelocityTracker;
     private int mScaledTouchSlop;
-    public static final float MAX_SPEED = 20.f;
-    private ValueAnimator mValueAnimator;
+    private int mScaledMaximumFlingVelocity;
+    private Scroller mScroller;
 
     public RuleProgressView(Context context) {
         this(context,null);
@@ -52,9 +50,13 @@ public class RuleProgressView extends View {
     private void init(){
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPath = new Path();
+        mScroller = new Scroller(getContext());
         ViewConfiguration viewConfiguration = ViewConfiguration.get(getContext());
         mScaledTouchSlop = viewConfiguration.getScaledTouchSlop();
+        mScaledMaximumFlingVelocity = viewConfiguration.getScaledMaximumFlingVelocity();
     }
+
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -113,53 +115,50 @@ public class RuleProgressView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
+        if (mVelocityTracker == null){
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(event);
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                preX = x;
-                if (mVelocityTracker == null){
-                    mVelocityTracker = VelocityTracker.obtain();
-                }else{
-                    mVelocityTracker.clear();
+                if (!mScroller.isFinished()) {
+                    mScroller.abortAnimation();
                 }
-                mVelocityTracker.addMovement(event);
+                preX = x;
                 return true;
             case MotionEvent.ACTION_MOVE:
-                mVelocityTracker.addMovement(event);
-                mVelocityTracker.computeCurrentVelocity(10, MAX_SPEED);
                 if (Math.abs(x-preX) >=mScaledTouchSlop){
-                    if (x >= preX){ //向右
-                        dx -= (preX -x);
-                    }else if (x < preX ){ //向左
-                        dx += (x-preX);
-                    }
+                    dx +=(x-preX);
                     preX = x;
                     postInvalidate();
                 }
                 return  true;
             case MotionEvent.ACTION_UP:
-                sliding();
+                mVelocityTracker.computeCurrentVelocity(1000, mScaledMaximumFlingVelocity);
+                fling();
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                if (mVelocityTracker != null) {
+                    mVelocityTracker.recycle();
+                    mVelocityTracker = null;
+                }
                 break;
         }
         return super.onTouchEvent(event);
     }
 
+    private void fling(){
+        mScroller.fling(getScrollX(),0,(int)mVelocityTracker.getXVelocity(),0,0,0,0,0);
+        invalidate();
+    }
 
-    private void sliding(){
-        if (mValueAnimator == null){
-            mValueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f);
-            mValueAnimator.setInterpolator(new DecelerateInterpolator());
-            mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float speed = mVelocityTracker.getXVelocity();
-                    float value = (float)animation.getAnimatedValue()*speed;
-                    dx += value;
-                    postInvalidate();
-                }
-            });
+    @Override
+    public void computeScroll() {
+        if (mScroller.computeScrollOffset()){
+            int currX = mScroller.getCurrX();
+            Logger.i("currX :"+currX);
+            postInvalidate();
         }
-        mValueAnimator.setDuration(2*1000);
-        mValueAnimator.start();
     }
 
     @Override

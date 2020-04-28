@@ -60,6 +60,22 @@ public class OtherFragment extends BaseFragment {
             canvas.translate(0,50.f);
             staticLayout.draw(canvas);
             canvas.restore();
+
+
+            TextPaint textPaint1 = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+            textPaint1.setTextSize(30);
+            textPaint1.setColor(Color.BLUE);
+//            textPaint1.setTextAlign(Paint.Align.CENTER);
+            String str  = "在一些场景下。比如界面上有大量的聊天并且活跃度高，内容包含了文字,emoji,图片等各种信息的复杂文本，采用TextView来展示这些内容信息。就容易观察到，聊天消息在频繁刷新的时候，性能有明显下降，GPU火焰图抖动也更加频繁。";
+            StaticLayout staticLayout1 = new StaticLayout(str,textPaint1,300,
+                    Layout.Alignment.ALIGN_CENTER,1,0,true);
+            canvas.save();
+            canvas.translate(400,50);
+            staticLayout1.draw(canvas);
+            paint.setStyle(Paint.Style.STROKE);
+            canvas.drawRect(0,0,300,staticLayout1.getHeight(),paint);
+            canvas.restore();
+
         }
 
         @Override

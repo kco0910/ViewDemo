@@ -84,7 +84,6 @@ public class TextFragment extends Fragment {
             String text2 = "a\nbc\ndefghi\njklm\nnopqrst\nuvwx\nyz";
             StaticLayout staticLayout2 = new StaticLayout(text2, textPaint, 600,
                     Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
-
             canvas.save();
             canvas.translate(0,120);
             staticLayout.draw(canvas);

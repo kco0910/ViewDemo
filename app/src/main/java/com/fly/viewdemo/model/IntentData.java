@@ -5,15 +5,18 @@ package com.fly.viewdemo.model;
  */
 
 public class IntentData {
-    public  String key;
-    public  Class cls;
-    public IntentData(String key,Class cls){
+    public String key;
+    public Class cls;
+
+    public IntentData(String key, Class cls) {
         this.key = key;
-        this.cls  = cls;
+        this.cls = cls;
     }
 
     @Override
     public String toString() {
         return key;
     }
+
+
 }

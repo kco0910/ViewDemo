@@ -41,10 +41,10 @@ public class FontMetricsFragment extends BaseFragment {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
             Paint paint = new Paint();
-            paint.setTextSize(30.0f);
+            paint.setTextSize(60.0f);
             paint.setColor(Color.BLACK);
             paint.setStyle(Paint.Style.FILL);
-            String str = "ABCDEFGHIJKLNM夜神";
+            String str = "ABCDEFGHIJKLNM夜神123456789";
             float length = paint.measureText(str);
             Paint.FontMetrics fontMetrics = paint.getFontMetrics();
             float ascent = fontMetrics.ascent;
