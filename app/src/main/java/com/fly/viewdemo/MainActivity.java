@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.fly.viewdemo.View.ViewActivity;
 import com.fly.viewdemo.arc.ArcActivity;
+import com.fly.viewdemo.circle.CircleActivity;
 import com.fly.viewdemo.layoutManager.LayoutManagerActivity;
 import com.fly.viewdemo.model.IntentData;
 import com.fly.viewdemo.path.PathActivity;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         datas.add(new IntentData("太极", TaiJiActivity.class));
         datas.add(new IntentData("Picture", PictureActivity.class));
         datas.add(new IntentData("弧度相关", ArcActivity.class));
+        datas.add(new IntentData("圆相关", CircleActivity.class));
         datas.add(new IntentData("LayoutManager", LayoutManagerActivity.class));
         ArrayAdapter<IntentData> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datas);
         mListView.setAdapter(adapter);

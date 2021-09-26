@@ -36,6 +36,7 @@
         <activity android:name=".View.ViewActivity"/>
         <activity android:name=".visualizer.VisualizerActivity" />
         <activity android:name=".layoutManager.LayoutManagerActivity" />
+        <activity android:name=".circle.CircleActivity"/>
     </application>
 
 </manifest>
